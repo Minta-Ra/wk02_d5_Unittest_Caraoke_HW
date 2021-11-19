@@ -5,5 +5,8 @@ class Guest:
 
 
     def deduct_ticket_fee_from_wallet(self, ticket_fee):
-        self.wallet -= ticket_fee.fee
-        return self.wallet
+        if self.wallet > ticket_fee.fee:
+            self.wallet -= ticket_fee.fee
+            return self.wallet
+        else:
+            return "Not enough money to buy a ticket"
