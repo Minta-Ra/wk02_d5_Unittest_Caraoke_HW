@@ -12,8 +12,9 @@ class TestRoom(unittest.TestCase):
         self.room_2 = Room("The Singing Stop")
 
         # Create Guest object
-        self.guest_1 = Guest("Martha Smith")
-        self.guest_2 = Guest("John Higins")
+        self.guest_1 = Guest("Martha Smith", 7.00)
+        self.guest_2 = Guest("John Higins", 14.00)
+        self.guest_3 = Guest("Rachel Blue", 10.00)
 
         # Create Song object
         self.song_1 = Song("Dancing in the Moonlight", 3.45)
@@ -23,13 +24,15 @@ class TestRoom(unittest.TestCase):
 
     def test_to_check_in_guest(self):
         expected = 1
-        actual = self.room_1.check_in_guest(self.guest_2)
+        self.room_1.check_in_guest(self.guest_2)
+        actual = self.room_1.num_of_guests()
         self.assertEqual(expected, actual)
 
     def test_to_check_out_guest(self):
         self.room_1.check_in_guest(self.guest_2)
+        self.room_1.check_out_guest(self.guest_2)
         expected = 0
-        actual = self.room_1.check_out_guest(self.guest_2)
+        actual = self.room_1.num_of_guests()
         self.assertEqual(expected, actual)
 
     def test_songs_added_to_room(self):
@@ -37,4 +40,18 @@ class TestRoom(unittest.TestCase):
         self.room_1.add_song_to_room(self.song_3)
         expected = 3
         actual = self.room_1.add_song_to_room(self.song_1)
+        self.assertEqual(expected, actual)
+
+    def test_room_has_space__true(self):
+        self.room_1.check_in_guest(self.guest_1)
+        expected = True
+        actual = self.room_1.check_room_space()
+        self.assertEqual(expected, actual)
+
+    def test_room_has_space__False(self):
+        self.room_1.check_in_guest(self.guest_1)
+        self.room_1.check_in_guest(self.guest_2)
+        self.room_1.check_in_guest(self.guest_3)
+        expected = False
+        actual = self.room_1.check_room_space()
         self.assertEqual(expected, actual)
