@@ -55,3 +55,10 @@ class TestRoom(unittest.TestCase):
         expected = False
         actual = self.room_1.check_room_space()
         self.assertEqual(expected, actual)
+
+    def test_add_sold_ticket_fee_to_till(self):
+        self.room_1.sell_ticket(self.guest_2, self.room_1)
+        self.room_1.sell_ticket(self.guest_3, self.room_1)
+        expected = 18.0
+        actual = self.room_1.sell_ticket(self.guest_1, self.room_1)
+        self.assertEqual(expected, actual)

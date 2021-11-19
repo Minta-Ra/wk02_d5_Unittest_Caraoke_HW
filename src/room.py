@@ -4,6 +4,8 @@ class Room:
         self.guest_list = []
         self.song_list = []
         self.room_space = 2
+        self.till = 0
+        self.fee = 6.0
 
 
     def num_of_guests(self):
@@ -24,3 +26,9 @@ class Room:
             return True
         else:
             return False
+
+    def sell_ticket(self, guest, ticket_fee):
+        guest.deduct_ticket_fee_from_wallet(ticket_fee)
+        # Add fee to the till
+        self.till += self.fee
+        return self.till
